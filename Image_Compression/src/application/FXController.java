@@ -1,3 +1,4 @@
+
 package application;
 
 import java.io.File;
@@ -10,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 import javax.imageio.plugins.jpeg.*;
 import javax.swing.JFileChooser;
@@ -28,15 +31,20 @@ public class FXController
     @FXML
     protected void openDialogue(ActionEvent event)
     {
-        JFileChooser chooser = new JFileChooser();
+    	FileChooser chooser = new FileChooser();
+    	chooser.getExtensionFilters().addAll(
+    			new ExtensionFilter("jpg Files","*.jpg"),
+    			new ExtensionFilter("png Files","*.png"),
+    			new ExtensionFilter("jpeg Files","*.jpeg"),
+    			new ExtensionFilter("All Files","*.*"));
         File f=null;
         BufferedImage img = null;
         Image imge=null;
-        if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+        f=chooser.showOpenDialog(null);
+        if(f != null)
         {
            try
            {
-              f=chooser.getSelectedFile();
               img = ImageIO.read(f);
               imge = new Image(f.toURI().toString());
            }
