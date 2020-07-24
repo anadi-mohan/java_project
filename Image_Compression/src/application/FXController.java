@@ -28,12 +28,14 @@ public class FXController
         JFileChooser chooser = new JFileChooser();
         File f=null;
         BufferedImage img = null;
+        Image imge=null;
         if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
         {
            try
            {
               f=chooser.getSelectedFile();
               img = ImageIO.read(f);
+              imge = new Image(f.toURI().toString());
            }
            catch(Exception e)
            {
@@ -41,8 +43,14 @@ public class FXController
            }
            int width = img.getWidth();
            int height = img.getHeight();
-           Image imge = Utils.BufferedImagetoImage(img);
-           updateImageView(originalPhoto,imge);
+           try
+           {
+        	   updateImageView(originalPhoto,imge);
+           }
+           catch(Exception e)
+           {
+        	   System.err.println("Error here");
+           }
         }
         else
         {

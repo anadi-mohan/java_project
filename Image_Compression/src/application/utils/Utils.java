@@ -1,6 +1,7 @@
 package application.utils;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
 
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
@@ -17,7 +18,7 @@ public final class Utils
         }
         catch(Exception e)
         {
-            System.err.println("Cannot convert the Buffered Image top Image");
+            System.err.println("Cannot convert the Buffered Image to Image"+e);
             return null;
         }
     }
