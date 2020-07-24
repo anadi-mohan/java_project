@@ -21,6 +21,9 @@ public class FXController
 
     @FXML
     private ImageView originalPhoto;
+    
+    @FXML
+    private ImageView modifiedImage;
 
     @FXML
     protected void openDialogue(ActionEvent event)
@@ -50,6 +53,30 @@ public class FXController
            catch(Exception e)
            {
         	   System.err.println("Error here");
+           }
+           for(int i=0;i<height;++i)
+        	   for(int j=0;j<width;++j)
+        	   {
+        		   int p = img.getRGB(j, i);
+        		   
+        		   int a = p >> 24 & 0xff;
+        		   int r = p >> 16 & 0xff;
+        		   int g = p>> 8 & 0xff;
+        		   int b = p & 0xff;
+        		   int avg = (r+g+b)/3;
+        		    p = a << 24 | avg << 16 | avg << 8 | avg;
+        		    img.setRGB(j, i, p);
+        	   }
+           try
+           {
+        	   f = new File("./b_w.jpg");
+        	   ImageIO.write(img,"jpg",f);
+        	   imge = new Image(f.toURI().toString());
+        	   updateImageView(modifiedImage,imge);
+           }
+           catch(Exception e)
+           {
+        	   System.err.println("Cannot show the modified Image"+e);
            }
         }
         else
